@@ -2,7 +2,7 @@
 
 import { ROUTES } from "@/config/constants";
 import { authService } from "@/lib/api/services/authService";
-import { clearTokens, getToken } from "@/lib/auth/storage";
+import { TokenStorage } from "@/lib/auth/storage";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const initializeAuth = async () => {
       try {
         // Kiểm tra xem có token trong localStorage
-        const token = getToken();
+        const token = TokenStorage.getAccessToken();
 
         if (!token) {
           // Không có token, đảm bảo state được reset
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(user);
       } catch (error: any) {
         // Token không hợp lệ hoặc hết hạn
-        clearTokens();
+        TokenStorage.clearTokens();
         logout();
 
         // Redirect đến login nếu đang ở trang protected

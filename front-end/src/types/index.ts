@@ -8,6 +8,13 @@ export interface User {
   phone?: string;
   avatar?: string;
   role: UserRole;
+  // New: Array of user roles (một user có thể có nhiều roles)
+  roles?: Array<{
+    id: number;
+    name: UserRole;
+    description?: string;
+  }>;
+
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -163,6 +170,18 @@ export interface DashboardStats {
   new_customers: number;
   total_appointments: number;
   pending_appointments: number;
+}
+
+/**
+ * Dashboard Widget interface
+ * Đại diện cho một widget trên dashboard
+ */
+export interface DashboardWidget {
+  id: string;
+  title: string;
+  type: "stat" | "chart" | "table" | "list";
+  roles: UserRole[]; // Roles có thể xem widget này
+  data?: Record<string, any>; // Widget data (dynamic)
 }
 
 // Error Types

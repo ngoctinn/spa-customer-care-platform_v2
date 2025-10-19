@@ -135,3 +135,67 @@ export const SUCCESS_MESSAGES = {
   UPDATE_SUCCESS: "Updated successfully!",
   DELETE_SUCCESS: "Deleted successfully!",
 } as const;
+
+// Role Labels (Vietnamese)
+export const ROLE_LABELS = {
+  admin: "Quản trị viên",
+  manager: "Quản lý",
+  receptionist: "Tiếp tân",
+  specialist: "Nhân viên chuyên môn",
+  customer: "Khách hàng",
+} as const;
+
+// Role Colors (Tailwind CSS color names)
+export const ROLE_COLORS = {
+  admin: "bg-red-100 text-red-800 border-red-300",
+  manager: "bg-blue-100 text-blue-800 border-blue-300",
+  receptionist: "bg-green-100 text-green-800 border-green-300",
+  specialist: "bg-purple-100 text-purple-800 border-purple-300",
+  customer: "bg-gray-100 text-gray-800 border-gray-300",
+} as const;
+
+// Dashboard Routes
+export const DASHBOARD_ROUTES = {
+  // Admin only
+  ADMIN_SETTINGS: "/dashboard/admin/settings",
+  USER_MANAGEMENT: "/dashboard/admin/users",
+  STAFF_MANAGEMENT: "/dashboard/admin/staff",
+  ADMIN_REPORTS: "/dashboard/admin/reports",
+
+  // Manager
+  REPORTS: "/dashboard/reports",
+  ANALYTICS: "/dashboard/analytics",
+
+  // All roles
+  CUSTOMERS: "/dashboard/customers",
+  APPOINTMENTS: "/dashboard/appointments",
+  SERVICES: "/dashboard/services",
+  PROFILE: "/dashboard/profile",
+
+  // Receptionist
+  // (same as manager's appointments/customers)
+
+  // Specialist
+  SCHEDULE: "/dashboard/appointments",
+
+  // Customer
+  MY_BOOKINGS: "/dashboard/bookings",
+  SERVICE_HISTORY: "/dashboard/history",
+} as const;
+
+// Route Labels (cho breadcrumb)
+export const ROUTE_LABELS: Record<string, string> = {
+  dashboard: "Dashboard",
+  customers: "Khách hàng",
+  appointments: "Lịch hẹn",
+  services: "Dịch vụ",
+  staff: "Nhân viên",
+  settings: "Cài đặt",
+  profile: "Hồ sơ",
+  admin: "Quản trị",
+  users: "Người dùng",
+  reports: "Báo cáo",
+  analytics: "Phân tích",
+  bookings: "Lịch hẹn của tôi",
+  history: "Lịch sử dịch vụ",
+} as const;
