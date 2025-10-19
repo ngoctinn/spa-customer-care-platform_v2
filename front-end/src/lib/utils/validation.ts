@@ -1,49 +1,87 @@
 import { z } from "zod";
 
-// Common validation schemas
-export const emailSchema = z.string().email("Email không hợp lệ");
-
-export const passwordSchema = z
-  .string()
-  .min(8, "Mật khẩu phải ít nhất 8 ký tự")
-  .regex(/[A-Z]/, "Mật khẩu phải có ít nhất một chữ hoa")
-  .regex(/[a-z]/, "Mật khẩu phải có ít nhất một chữ thường")
-  .regex(/[0-9]/, "Mật khẩu phải có ít nhất một số");
-
-export const phoneSchema = z
-  .string()
-  .regex(/^(\+84|0)[0-9]{9,10}$/, "Số điện thoại không hợp lệ");
-
-export const urlSchema = z.string().url("URL không hợp lệ");
-
-// Login schema
+/**
+ * Schema xác thực cho form đăng nhập
+ */
 export const loginSchema = z.object({
-  email: emailSchema,
-  password: z.string().min(1, "Mật khẩu là bắt buộc"),
+  email: z.string().email("Email không hợp lệ").min(1, "Email là bắt buộc"),
+  password: z
+    .string()
+    .min(8, "Mật khẩu phải có ít nhất 8 ký tự")
+    .max(128, "Mật khẩu tối đa 128 ký tự"),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 
-// Register schema
+/**
+ * Schema xác thực cho form đăng ký
+ */
 export const registerSchema = z
   .object({
-    email: emailSchema,
-    full_name: z.string().min(2, "Tên phải ít nhất 2 ký tự"),
-    password: passwordSchema,
-    password_confirm: z.string(),
+    email: z.string().email("Email không hợp lệ").min(1, "Email là bắt buộc"),
+    password: z
+      .string()
+      .min(8, "Mật khẩu phải có ít nhất 8 ký tự")
+      .max(128, "Mật khẩu tối đa 128 ký tự"),
+    confirmPassword: z.string().min(1, "Vui lòng xác nhận mật khẩu"),
+    terms: z.boolean().refine((val) => val === true, {
+      message: "Bạn phải chấp nhận điều khoản",
+    }),
   })
-  .refine((data) => data.password === data.password_confirm, {
-    message: "Mật khẩu không trùng khớp",
-    path: ["password_confirm"],
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Mật khẩu không khớp",
+    path: ["confirmPassword"],
   });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
 
+/**
+ * Schema xác thực cho form reset password (bước 1)
+ */
+export const passwordResetRequestSchema = z.object({
+  email: z.string().email("Email không hợp lệ").min(1, "Email là bắt buộc"),
+});
+
+export type PasswordResetRequestData = z.infer<
+  typeof passwordResetRequestSchema
+>;
+
+/**
+ * Schema xác thực cho form đặt lại mật khẩu (bước 2)
+ */
+export const confirmPasswordResetSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(8, "Mật khẩu phải có ít nhất 8 ký tự")
+      .max(128, "Mật khẩu tối đa 128 ký tự"),
+    confirmPassword: z.string().min(1, "Vui lòng xác nhận mật khẩu"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Mật khẩu không khớp",
+    path: ["confirmPassword"],
+  });
+
+export type ConfirmPasswordResetData = z.infer<
+  typeof confirmPasswordResetSchema
+>;
+
+/**
+ * Schema xác thực cho form xác minh email
+ */
+export const verifyEmailSchema = z.object({
+  token: z.string().min(32, "Token không hợp lệ").optional().nullable(),
+});
+
+export type VerifyEmailData = z.infer<typeof verifyEmailSchema>;
+
 // Customer schema
 export const customerSchema = z.object({
   full_name: z.string().min(2, "Tên phải ít nhất 2 ký tự"),
-  email: emailSchema.optional().or(z.literal("")),
-  phone: phoneSchema,
+  email: z.string().email("Email không hợp lệ").optional().or(z.literal("")),
+  phone: z
+    .string()
+    .regex(/^(\+84|0)[0-9]{9,10}$/, "Số điện thoại không hợp lệ"),
   skin_type: z.string().optional(),
   health_notes: z.string().optional(),
 });
@@ -76,7 +114,12 @@ export type AppointmentFormData = z.infer<typeof appointmentSchema>;
 // Password reset schema
 export const passwordResetSchema = z
   .object({
-    password: passwordSchema,
+    password: z
+      .string()
+      .min(8, "Mật khẩu phải có ít nhất 8 ký tự")
+      .regex(/[A-Z]/, "Mật khẩu phải có ít nhất một chữ hoa")
+      .regex(/[a-z]/, "Mật khẩu phải có ít nhất một chữ thường")
+      .regex(/[0-9]/, "Mật khẩu phải có ít nhất một số"),
     password_confirm: z.string(),
   })
   .refine((data) => data.password === data.password_confirm, {
@@ -89,7 +132,7 @@ export type PasswordResetFormData = z.infer<typeof passwordResetSchema>;
 // Validation helpers
 export const validateEmail = (email: string): boolean => {
   try {
-    emailSchema.parse(email);
+    z.string().email("Email không hợp lệ").parse(email);
     return true;
   } catch {
     return false;
@@ -98,7 +141,12 @@ export const validateEmail = (email: string): boolean => {
 
 export const validatePassword = (password: string): boolean => {
   try {
-    passwordSchema.parse(password);
+    z.string()
+      .min(8, "Mật khẩu phải có ít nhất 8 ký tự")
+      .regex(/[A-Z]/, "Mật khẩu phải có ít nhất một chữ hoa")
+      .regex(/[a-z]/, "Mật khẩu phải có ít nhất một chữ thường")
+      .regex(/[0-9]/, "Mật khẩu phải có ít nhất một số")
+      .parse(password);
     return true;
   } catch {
     return false;
@@ -107,7 +155,9 @@ export const validatePassword = (password: string): boolean => {
 
 export const validatePhoneNumber = (phone: string): boolean => {
   try {
-    phoneSchema.parse(phone);
+    z.string()
+      .regex(/^(\+84|0)[0-9]{9,10}$/, "Số điện thoại không hợp lệ")
+      .parse(phone);
     return true;
   } catch {
     return false;

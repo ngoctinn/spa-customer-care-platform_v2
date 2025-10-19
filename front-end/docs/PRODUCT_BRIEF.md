@@ -1,428 +1,489 @@
-# SPA CUSTOMER CARE PLATFORM - FRONTEND PRODUCT BRIEF
+# 📱 BRIEF SẢN PHẨM - NỀN TẢNG CHĂM SÓC KHÁCH HÀNG SPA
 
-## 1. Tổng quan / Mô tả Dự án
-
-**Spa Customer Care Platform Frontend** là ứng dụng web hiện đại xây dựng bằng **Next.js 14**, **TypeScript**, **Tailwind CSS** và **shadcn/ui**. Đây là giao diện người dùng cho hệ thống quản lý chăm sóc khách hàng spa (CRM), hỗ trợ **4 nhóm người dùng chính** với các tính năng và quyền hạn riêng biệt.
-
-Ứng dụng cung cấp trải nghiệm người dùng mượt mà (smooth UX), responsive design cho mobile/tablet/desktop, và tích hợp hoàn toàn với Backend API FastAPI.
+**Phiên bản:** 1.0.0  
+**Ngày cập nhật:** 19/10/2025  
+**Trạng thái:** Sẵn sàng phát triển ✅
 
 ---
 
-## 2. Đối tượng Mục tiêu & Phân Quyền
+## 1️⃣ TỔNG QUAN / MÔ TẢ DỰ ÁN
 
-### 👥 4 Nhóm Người Dùng Chính
+### 📌 Mục Tiêu
 
-| Nhóm | Mô tả | Tính năng Chính |
-|------|-------|-----------------|
-| **Quản lý / Chủ spa** | Chủ sở hữu hoặc quản lý cao cấp spa | Dashboard tổng quan, quản lý nhân viên, dịch vụ, báo cáo doanh thu, phân tích KPI |
-| **Lễ tân spa** | Nhân viên tiếp đón khách | Quản lý lịch hẹn, đăng ký khách mới, xử lý booking, hỗ trợ khách hàng |
-| **Chuyên viên spa** | Nhân viên thực hiện dịch vụ | Xem lịch làm việc cá nhân, cập nhật trạng thái dịch vụ, ghi chú cho khách hàng |
-| **Khách hàng** | Người sử dụng dịch vụ spa | Đăng ký/Đăng nhập, đặt lịch hẹn, xem lịch sử, quản lý hồ sơ, đánh giá dịch vụ |
+**Xây dựng nền tảng quản lý khách hàng SPA hiện đại**, giúp các cơ sở SPA:
+
+- 📊 Quản lý khách hàng & lịch hẹn hiệu quả
+- 💼 Tối ưu hóa quy trình kinh doanh
+- 📈 Tăng trải nghiệm khách hàng
+- 🔐 Quản lý dữ liệu an toàn, có cấp độ truy cập
+
+### 🎯 Phạm Vi
+
+- **Frontend:** Ứng dụng web SPA (Single Page Application) với Next.js 15
+- **Backend:** API REST được xây dựng trên FastAPI/Python
+- **Cơ sở dữ liệu:** PostgreSQL với quản lý phiên bản schema qua Alembic
+
+### 💡 Giá Trị Cốt Lõi
+
+Cung cấp giao diện **thiết kế đơn giản, thân thiện** cho các chủ SPA Việt Nam, từ quản lý đội ngũ, khách hàng, dịch vụ cho đến lịch hẹn - tất cả từ **một dashboard tổng hợp**.
 
 ---
 
-## 3. Tính năng Chính theo Role
+## 2️⃣ ĐỐI TƯỢNG MỤC TIÊU
 
-### 🔐 **Authentication & Authorization**
+### 👥 Người Dùng Chính
 
-- ✅ Đăng ký tài khoản với xác minh email (OTP token)
-- ✅ Đăng nhập với JWT + Refresh token (auto-renew)
-- ✅ Đăng xuất an toàn
+#### **A. Quản Trị Viên (Admin)**
+
+- Người quản lý hệ thống chính của SPA
+- Quản lý toàn bộ nhân viên, dịch vụ, khách hàng
+- Xem báo cáo tổng hợp & thống kê doanh thu
+- Quyền hạn cao nhất trên hệ thống
+
+#### **B. Quản Lý (Manager)**
+
+- Quản lý hoạt động hàng ngày
+- Xem lịch lịch hẹn & phân công nhân viên
+- Quản lý thông tin khách hàng
+- Tạo & cập nhật dịch vụ
+
+#### **C. Tiếp Tân (Receptionist)**
+
+- Đón tiếp & ghi nhận thông tin khách hàng
+- Đặt lịch hẹn cho khách
+- Xem tình trạng dịch vụ & nhân viên
+- Cập nhật ghi chú khách hàng
+
+#### **D. Nhân Viên Chuyên Môn (Specialist)**
+
+- Xem lịch làm việc của mình
+- Cập nhật trạng thái dịch vụ
+- Xem thông tin khách hàng chi tiết
+- Quản lý chuyên môn & tài nguyên
+
+#### **E. Khách Hàng (Tương lai)**
+
+- Đặt & quản lý lịch hẹn
+- Xem lịch sử dịch vụ
+- Chọn nhân viên & dịch vụ yêu thích
+
+---
+
+## 3️⃣ LỢI ÍCH & TÍNH NĂNG CHÍNH
+
+### ✨ Tính Năng Cốt Lõi
+
+#### **🔐 Quản Lý Xác Thực & Phân Quyền**
+
+- ✅ Đăng nhập/Đăng ký với email & mật khẩu
+- ✅ JWT Token & Auto-Refresh Token
+- ✅ 5 vai trò người dùng (Admin, Manager, Receptionist, Specialist, Customer)
+- ✅ Kiểm soát truy cập dựa trên vai trò (RBAC)
 - ✅ Quên mật khẩu & Đặt lại mật khẩu
-- ✅ Phân quyền theo role (RBAC)
-- ✅ Protected routes & permission checks
-- ✅ Persistent login (remember me)
 
-### 📊 **Dashboard & Home**
+#### **👥 Quản Lý Khách Hàng**
 
-#### Quản lý / Chủ spa
-- Tổng quan kinh doanh (tổng doanh thu, khách hàng mới, lịch hẹn hôm nay)
-- Biểu đồ thống kê (doanh thu theo tháng, dịch vụ phổ biến, khách hàng mất đi)
-- Danh sách lịch hẹn sắp tới
-- Quản lý nhân viên (trạng thái, ca làm việc)
+- ✅ Danh sách & Tìm kiếm khách hàng
+- ✅ Thêm/Sửa/Xóa thông tin khách hàng
+- ✅ Lưu loại da & ghi chú sức khỏe
+- ✅ Gán thẻ & phân loại khách hàng
+- ✅ Xem lịch sử dịch vụ & hẹn của khách
 
-#### Lễ tân spa
-- Lịch hẹn hôm nay & tuần tới
-- Danh sách khách hàng (search, filter)
-- Nút nhanh: Tạo lịch hẹn, Đăng ký khách mới
-- Thông báo booking mới/hủy
+#### **📅 Quản Lý Lịch Hẹn**
 
-#### Chuyên viên spa
-- Lịch làm việc hôm nay
-- Danh sách khách hàng hôm nay
-- Ghi chú & lịch sử khách hàng
+- ✅ Xem lịch hẹn theo ngày/tuần/tháng
+- ✅ Tạo/Chỉnh sửa/Hủy lịch hẹn
+- ✅ Xác nhận hoặc hủy bỏ lịch hẹn
+- ✅ Ghi chú & lịch sử lịch hẹn
+- ✅ Kiểm tra xung đột thời gian
 
-#### Khách hàng
-- Banner quảng cáo/khuyến mãi
-- Nút nhanh: Đặt lịch hẹn, Xem lịch sử
-- Thông báo nhắc lịch hẹn
+#### **💇 Quản Lý Dịch Vụ**
 
-### 👥 **Quản lý Khách hàng (CRM)**
+- ✅ Danh sách đầy đủ dịch vụ SPA
+- ✅ Giá cả & Thời lượng dịch vụ
+- ✅ Mô tả chi tiết & Hình ảnh dịch vụ
+- ✅ Kích hoạt/Vô hiệu hóa dịch vụ
+- ✅ Phân loại dịch vụ
 
-- Danh sách khách hàng với search/filter/sort
-- Chi tiết hồ sơ khách hàng (thông tin cá nhân, tình trạng da, tiền sử bệnh)
-- Lịch sử điều trị chi tiết (dịch vụ, ngày tháng, ghi chú)
-- Thêm/Sửa/Xóa khách hàng (permission)
-- Import khách hàng từ CSV
-- Gắn tag/phân loại khách hàng
-- Tính năng email reminder tự động
+#### **👔 Quản Lý Nhân Viên**
 
-### 📅 **Quản lý Lịch hẹn**
+- ✅ Danh sách nhân viên & vai trò
+- ✅ Chuyên môn & Chứng chỉ
+- ✅ Trạng thái làm việc
+- ✅ Liên hệ & Thông tin liên lạc
+- ✅ Kích hoạt/Vô hiệu hóa nhân viên
 
-- **Lịch hẹn Online:**
-  - Giao diện calendar trực quan
-  - Chọn dịch vụ → Chọn ngày/giờ → Chọn nhân viên
-  - Xác nhận & thanh toán (nếu cần)
-  - Auto notification gửi email
+#### **📊 Bảng Điều Khiển (Dashboard)**
 
-- **Quản lý Lịch hẹn (Nội bộ):**
-  - Calendar view (Ngày/Tuần/Tháng)
-  - Kéo thả để thay đổi giờ
-  - Status: Pending/Confirmed/Completed/Cancelled
-  - Ghi chú & tệp đính kèm
+- ✅ Thống kê tổng doanh thu
+- ✅ Số lượng khách hàng mới
+- ✅ Tổng lịch hẹn & Lịch hẹn chưa xử lý
+- ✅ Widget widget theo vai trò
+- ✅ Nhanh nhạy & Đáp ứng
 
-### 🛍️ **Quản lý Dịch vụ & Sản phẩm**
+### 🎨 Tính Năng Giao Diện
 
-- Danh mục dịch vụ spa (Massage, Skincare, Nails, etc.)
-- Chi tiết dịch vụ (mô tả, giá, thời lượng, hình ảnh)
-- Quản lý sản phẩm bán ra
-- Pricing & duration setup
-- Status: Active/Inactive
+#### **Thiết Kế Thân Thiện Người Việt**
 
-### 👨‍💼 **Quản lý Nhân viên**
+- ✅ Giao diện tiếng Việt 100%
+- ✅ Định dạng tiền tệ VND
+- ✅ Định dạng ngày tháng DD/MM/YYYY
+- ✅ Số điện thoại Việt (09x, 08x, 07x, 05x)
+- ✅ Icon trực quan & Hướng dẫn chi tiết
 
-- Danh sách nhân viên
-- Chi tiết profile (thông tin cá nhân, kỹ năng, chứng chỉ)
-- Phân quyền & role management
-- Lịch làm việc & ca trực
-- Phân công dịch vụ
-- Hiệu suất & đánh giá
+#### **Trải Nghiệm Người Dùng**
 
-### 💳 **Thanh toán & Hoá đơn** *(Phase 2)*
+- ✅ Giao diện sạch, tối giản
+- ✅ Điều hướng dễ dàng
+- ✅ Tìm kiếm & Lọc nhanh chóng
+- ✅ Modal & Thông báo hữu ích
+- ✅ Phản hồi trực tiếp cho mỗi hành động
+- ✅ Responsive trên máy tính & tablet
 
-- Tích hợp payment gateway (Stripe, VNPay)
-- Xem hoá đơn
-- Lịch sử thanh toán
+#### **Tối ưu Hiệu Năng**
 
-### 📱 **Mobile Responsive**
+- ✅ Tải trang nhanh (Next.js 15)
+- ✅ Lazy Loading hình ảnh
+- ✅ Cache thông minh
+- ✅ Không đơn đặt hàng không cần thiết
 
-- Responsive design cho tất cả screen size
-- Mobile-first approach
-- Touch-friendly buttons & interactions
+### 🔧 Tính Năng Kỹ Thuật
+
+#### **Quản Lý Trạng Thái & Dữ Liệu**
+
+- ✅ State Management với Zustand
+- ✅ Validation Form với React Hook Form + Zod
+- ✅ HTTP Client với Axios & Interceptor
+- ✅ Auto-retry khi lỗi mạng
+- ✅ Token Refresh tự động
+
+#### **An Toàn & Bảo Mật**
+
+- ✅ HTTPS trên production
+- ✅ JWT Token bảo mật
+- ✅ CORS được cấu hình
+- ✅ Input Validation
+- ✅ Xử lý lỗi an toàn
+
+#### **Hỗ Trợ & Khả Năng Mở Rộng**
+
+- ✅ TypeScript strict mode
+- ✅ ESLint cho code quality
+- ✅ Component reusable
+- ✅ Architecture scalable
+- ✅ Environment config linh hoạt
 
 ---
 
-## 4. Công nghệ / Kiến trúc
+## 4️⃣ CÔNG NGHỆ & KIẾN TRÚC CẤP CAO
 
-### 🛠️ **Tech Stack**
+### 🏗️ Stack Công Nghệ Frontend
 
-| Tầng | Công nghệ | Phiên bản |
-|-----|-----------|----------|
-| **Framework** | Next.js App Router | 15.5.6 |
-| **Language** | TypeScript | 5.9.3 |
-| **UI Library** | React | 19.1.0 |
-| **Styling** | Tailwind CSS | 4.1.14 |
-| **UI Components** | shadcn/ui | Latest |
-| **State Management** | Zustand | 4.5.0+ |
-| **HTTP Client** | Axios | 1.7.2+ |
-| **Authentication** | JWT + NextAuth.js | 4.24.13+ |
-| **Icons** | Lucide React | 0.408.0+ |
-| **Form Handling** | React Hook Form + Zod | Latest |
-| **Date Picker** | Radix UI / Headless | Latest |
-| **Build Tool** | Turbopack | Built-in |
-| **Code Quality** | ESLint 9 | 9.0+ |
-| **Dev Server** | Next.js Dev Server | 15.5.6 |
+#### **Core Framework**
 
-### 📂 **Kiến Trúc & Cấu Trúc Thư Mục**
+| Công Nghệ      | Phiên Bản | Mục Đích                             |
+| -------------- | --------- | ------------------------------------ |
+| **Next.js**    | 15.5.6    | Framework React với App Router & SSR |
+| **React**      | 19.1.0    | Thư viện UI chính                    |
+| **TypeScript** | 5.9.3     | Type safety & Code quality           |
+| **Node.js**    | 18+ LTS   | Runtime JavaScript                   |
+
+#### **UI & Styling**
+
+| Công Nghệ        | Phiên Bản | Mục Đích                                     |
+| ---------------- | --------- | -------------------------------------------- |
+| **Tailwind CSS** | 4.1.14    | Utility-first CSS framework                  |
+| **shadcn/ui**    | Latest    | Component library dựa Headless UI + Radix UI |
+| **Lucide Icons** | 0.546.0   | Icon library (1000+ icons)                   |
+| **clsx**         | 2.1.1     | Conditional className                        |
+| **CVA**          | 0.7.1     | Component Variants Authority                 |
+
+#### **State Management & Form**
+
+| Công Nghệ               | Phiên Bản | Mục Đích                                   |
+| ----------------------- | --------- | ------------------------------------------ |
+| **Zustand**             | 5.0.8     | Global state management (Auth, User, etc.) |
+| **React Hook Form**     | 7.65.0    | Form state & submission                    |
+| **Zod**                 | 4.1.12    | Runtime validation & TypeScript schemas    |
+| **@hookform/resolvers** | 5.2.2     | Integration Hook Form + Zod                |
+
+#### **API & Communication**
+
+| Công Nghệ | Phiên Bản | Mục Đích                      |
+| --------- | --------- | ----------------------------- |
+| **Axios** | 1.12.2    | HTTP client với interceptors  |
+| **N/A**   | -         | WebSocket (future: socket.io) |
+
+#### **Development Tools**
+
+| Công Nghệ     | Phiên Bản | Mục Đích                      |
+| ------------- | --------- | ----------------------------- |
+| **ESLint**    | 9         | Code linting & best practices |
+| **Turbopack** | Built-in  | Fast bundler                  |
+| **pnpm**      | 8/9       | Package manager               |
+
+### 📁 Kiến Trúc Folder
 
 ```
 front-end/
 ├── src/
-│   ├── app/                    # App Router (Next.js 14+)
-│   │   ├── layout.tsx          # Root layout
-│   │   ├── page.tsx            # Home page
-│   │   ├── (auth)/             # Auth pages group
+│   ├── app/                        # Next.js 15 App Router
+│   │   ├── (auth)/                 # Auth pages group
 │   │   │   ├── login/
 │   │   │   ├── register/
 │   │   │   └── forgot-password/
-│   │   ├── (dashboard)/        # Dashboard pages group (protected)
-│   │   │   ├── layout.tsx      # Dashboard layout
-│   │   │   ├── page.tsx        # Dashboard home
-│   │   │   ├── customers/      # Customer management
-│   │   │   ├── appointments/   # Appointment management
-│   │   │   ├── services/       # Service management
-│   │   │   ├── staff/          # Staff management
-│   │   │   └── settings/       # User settings
-│   │   ├── api/                # API routes (if needed)
-│   │   └── globals.css         # Global styles
+│   │   ├── (dashboard)/            # Dashboard pages group
+│   │   │   ├── customers/
+│   │   │   ├── appointments/
+│   │   │   ├── services/
+│   │   │   ├── staff/
+│   │   │   └── settings/
+│   │   ├── layout.tsx              # Root layout
+│   │   ├── page.tsx                # Home page
+│   │   └── globals.css             # Global styles
 │   │
-│   ├── components/             # Reusable React components
-│   │   ├── common/             # Shared components
-│   │   │   ├── Header.tsx
-│   │   │   ├── Sidebar.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   └── ...
-│   │   ├── auth/               # Auth components
-│   │   │   ├── LoginForm.tsx
-│   │   │   ├── RegisterForm.tsx
-│   │   │   └── ...
-│   │   ├── dashboard/          # Dashboard components
-│   │   ├── customers/          # Customer components
-│   │   ├── appointments/       # Appointment components
-│   │   ├── services/           # Service components
-│   │   └── ui/                 # shadcn/ui components (button, input, etc.)
+│   ├── components/                 # React Components
+│   │   ├── auth/                   # Auth components (Login, Register)
+│   │   ├── customers/              # Customer management UI
+│   │   ├── appointments/           # Appointment management UI
+│   │   ├── services/               # Service management UI
+│   │   ├── dashboard/              # Dashboard components
+│   │   ├── common/                 # Shared components (Header, Sidebar)
+│   │   └── ui/                     # shadcn/ui components
 │   │
-│   ├── lib/                    # Utilities & helpers
-│   │   ├── api/                # API client setup (Axios)
-│   │   │   ├── client.ts       # Axios instance
-│   │   │   ├── interceptors.ts # Request/response interceptors
-│   │   │   └── services/       # API service functions
-│   │   ├── auth/               # Authentication helpers
-│   │   │   ├── jwt.ts
-│   │   │   ├── storage.ts
-│   │   │   └── ...
-│   │   ├── hooks/              # Custom React hooks
-│   │   │   ├── useAuth.ts
-│   │   │   ├── useCustomers.ts
-│   │   │   └── ...
-│   │   ├── utils/              # Utility functions
-│   │   │   ├── format.ts
-│   │   │   ├── validation.ts
-│   │   │   └── ...
-│   │   └── types/              # TypeScript type definitions
-│   │       ├── index.ts        # Common types
-│   │       ├── auth.ts
-│   │       ├── customer.ts
+│   ├── lib/                        # Utilities & Libraries
+│   │   ├── api/
+│   │   │   ├── client.ts           # Axios instance + interceptors
+│   │   │   └── services/           # API service layer (to create)
+│   │   ├── auth/
+│   │   │   └── storage.ts          # Token storage utils
+│   │   ├── hooks/
+│   │   │   └── useAuth.ts          # Custom auth hook
+│   │   └── utils/
+│   │       ├── format.ts           # Format date, currency, phone (VN)
+│   │       ├── validation.ts       # Zod schemas
 │   │       └── ...
 │   │
-│   ├── store/                  # Zustand stores (state management)
-│   │   ├── authStore.ts        # Auth state
-│   │   ├── customerStore.ts    # Customer state
-│   │   ├── appointmentStore.ts
+│   ├── store/                      # Zustand State Management
+│   │   ├── authStore.ts            # Auth state (user, token, login, logout)
+│   │   ├── userStore.ts            # User profile (future)
 │   │   └── ...
 │   │
-│   ├── styles/                 # Tailwind config & custom styles
-│   │   └── globals.css
+│   ├── config/                     # Configuration
+│   │   └── constants.ts            # Routes, endpoints, enums, messages
 │   │
-│   └── config/                 # App configuration
-│       ├── constants.ts        # Constants & enums
-│       └── environment.ts      # Environment variables
+│   ├── types/                      # TypeScript Types
+│   │   └── index.ts                # All interfaces & types
+│   │
+│   └── middleware.ts               # Next.js middleware (future)
 │
-├── public/                     # Static assets
-│   ├── images/
-│   ├── icons/
-│   └── ...
+├── public/
+│   ├── images/                     # Static images
+│   └── icons/                      # Brand icons
 │
-├── docs/                       # Documentation
-│   ├── PRODUCT_BRIEF.md        # This file
-│   ├── INDEX.md
-│   ├── FRONTEND_SETUP.md
-│   ├── ARCHITECTURE.md
-│   ├── API_INTEGRATION.md
-│   └── COMPONENT_GUIDE.md
+├── docs/
+│   ├── PRODUCT_BRIEF.md            # 📄 Tài liệu này
+│   ├── INDEX.md                    # Documentation index
+│   └── features/                   # Feature documentation
 │
-├── .env.local                  # Environment variables (local)
-├── .env.example               # Environment template
-├── next.config.ts             # Next.js configuration
-├── tsconfig.json              # TypeScript configuration
-├── tailwind.config.ts         # Tailwind CSS configuration
-├── postcss.config.mjs          # PostCSS configuration
-├── eslint.config.mjs          # ESLint configuration
-├── package.json               # Dependencies
-├── pnpm-lock.yaml             # Lock file
-└── README.md                  # Project README
+├── .env.local                      # Environment variables
+├── next.config.ts                  # Next.js configuration
+├── tsconfig.json                   # TypeScript config
+├── tailwind.config.ts              # Tailwind CSS config
+├── postcss.config.mjs              # PostCSS config
+├── eslint.config.mjs               # ESLint config
+├── components.json                 # shadcn/ui config
+├── package.json
+├── pnpm-lock.yaml
+└── README.md
 ```
 
-### 🏗️ **Kiến Trúc Tầng**
+### 🔄 Luồng Dữ Liệu
 
 ```
-┌─────────────────────────────────────────────┐
-│           Next.js 14 App Router             │
-│  (pages, layouts, api routes, middleware)   │
-└──────────────────┬──────────────────────────┘
-                   │
-┌──────────────────┴──────────────────────────┐
-│         React Components (shadcn/ui)        │
-│  (Headers, Forms, Modals, Tables, etc.)     │
-└──────────────────┬──────────────────────────┘
-                   │
-┌──────────────────┴──────────────────────────┐
-│  Zustand Stores (State Management)          │
-│  (authStore, customerStore, etc.)           │
-└──────────────────┬──────────────────────────┘
-                   │
-┌──────────────────┴──────────────────────────┐
-│  API Service Layer (Axios + Interceptors)   │
-│  (HTTP calls, error handling, auth token)   │
-└──────────────────┬──────────────────────────┘
-                   │
-┌──────────────────┴──────────────────────────┐
-│    FastAPI Backend (API Endpoints)          │
-│    http://localhost:8000                    │
-└─────────────────────────────────────────────┘
+User Interface (Component)
+    ↓
+React Hooks + Zustand Store
+    ↓
+Axios Client + Interceptors
+    ↓
+Backend API (FastAPI)
+    ↓
+PostgreSQL Database
 ```
+
+### 🎯 Architecture Patterns
+
+#### **1. Component-Based Architecture**
+
+- Components tái sử dụng được
+- Props-based configuration
+- Separation of concerns
+
+#### **2. Feature-Based Structure**
+
+- Folder theo tính năng (auth, customers, etc.)
+- Dễ bảo trì & mở rộng
+- Dependency isolation
+
+#### **3. Layered Architecture**
+
+```
+Presentation Layer (Components)
+        ↓
+Business Logic Layer (Hooks, Services)
+        ↓
+Data Access Layer (API Client, Store)
+        ↓
+Backend Layer
+```
+
+#### **4. State Management Strategy**
+
+- **Global State:** Authentication (Zustand)
+- **Local State:** Form state, UI state (React hooks)
+- **Server State:** Data caching (future: React Query)
+
+### 🔐 Luồng Xác Thực
+
+```
+1. User submits login credentials
+2. POST /auth/login → Get access_token + refresh_token
+3. Store tokens in localStorage (via authStore)
+4. Set user info in Zustand store
+5. Redirect to dashboard
+6. On token expiry: Auto-refresh using refresh_token
+7. If refresh fails: Clear tokens & redirect to login
+```
+
+### 📡 Integration Points
+
+#### **Backend API**
+
+- Base URL: `http://localhost:8000` (configurable)
+- Auth endpoints: Login, Register, Refresh
+- Customer endpoints: CRUD operations
+- Service endpoints: List, Create, Update
+- Appointment endpoints: Booking, Scheduling
+- Staff endpoints: Management, Assignment
+
+#### **Configuration**
+
+- API Base URL → `.env.local` (NEXT_PUBLIC_API_URL)
+- Token keys → `.env.local` (NEXT_PUBLIC_AUTH_TOKEN_KEY)
+- App name → `.env.local` (NEXT_PUBLIC_APP_NAME)
+- Feature flags → `.env.local` (NEXT*PUBLIC_ENABLE*\*)
 
 ---
 
-## 5. Non-Functional Requirements (NFR)
+## 🚀 Roadmap Phát Triển
 
-### Performance
-- Page load time < 2 seconds
-- First Contentful Paint (FCP) < 1.5s
-- Lazy loading for images & components
-- API caching strategy (SWR, React Query)
+### Phase 1: Foundation ✅
 
-### Security
-- ✅ HTTPS in production
-- ✅ JWT token management (secure storage)
-- ✅ CSRF protection via SameSite cookies
-- ✅ XSS prevention via React's built-in escaping
-- ✅ CORS configuration
-- ✅ Input validation & sanitization
+- [x] Project setup (Next.js 15, TypeScript)
+- [x] Tailwind CSS & shadcn/ui
+- [x] Zustand store & Auth flow
+- [x] Axios client & interceptors
+- [x] Type definitions
+- [x] Constants & Configuration
 
-### Accessibility (a11y)
-- ✅ WCAG 2.1 Level AA compliance
-- ✅ Keyboard navigation
-- ✅ Screen reader support
-- ✅ Color contrast ratios
-- ✅ ARIA labels & roles
+### Phase 2: Authentication & UI (Hiện tại)
 
-### Browser Support
-- ✅ Chrome (latest)
-- ✅ Firefox (latest)
-- ✅ Safari (latest)
-- ✅ Edge (latest)
-- ⚠️ IE11 (deprecated)
+- [ ] Auth pages (Login, Register, Reset Password)
+- [ ] Dashboard layout & Navigation
+- [ ] shadcn/ui components integration
+- [ ] Form validation & Error handling
+- [ ] Loading & Error states
 
-### Mobile Responsiveness
-- ✅ Mobile-first design
-- ✅ Responsive breakpoints: 320px, 640px, 768px, 1024px, 1280px
-- ✅ Touch-friendly interactions
+### Phase 3: Core Features
 
----
+- [ ] Customer management
+- [ ] Service management
+- [ ] Appointment scheduling
+- [ ] Staff management
+- [ ] Dashboard statistics
 
-## 6. Phát Triển & Roadmap
+### Phase 4: Enhancement
 
-### Phase 1 (MVP) - Hiện tại
-- ✅ Project initialization
-- 🔄 Authentication system (login/register/logout)
-- 🔄 Dashboard & Role-based views
-- 🔄 Customer management
-- 🔄 Appointment booking & management
-- 🔄 Service catalog
+- [ ] Image upload & media management
+- [ ] Search & Advanced filters
+- [ ] Export & Reports
+- [ ] Notifications & Alerts
+- [ ] Dark mode support
 
-### Phase 2 (Enhancement)
-- Thanh toán trực tuyến (Payment gateway)
-- SMS/Email notifications
-- Advanced reporting & analytics
-- Staff performance tracking
-- Customer reviews & ratings
+### Phase 5: Production Ready
 
-### Phase 3 (Optimization)
-- PWA support (offline mode)
-- Real-time notifications (WebSocket)
-- Analytics dashboard
-- AI-powered recommendations
-- Multi-language support
+- [ ] Testing (Jest + React Testing Library)
+- [ ] Performance optimization
+- [ ] SEO optimization
+- [ ] Deployment automation
+- [ ] Monitoring & Analytics
 
 ---
 
-## 7. Environment Variables (.env.local)
+## 📋 Development Guidelines
 
-```env
-# API Configuration
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_API_TIMEOUT=30000
+### ✅ Code Standards
 
-# Authentication
-NEXT_PUBLIC_AUTH_TOKEN_KEY=auth_token
-NEXT_PUBLIC_REFRESH_TOKEN_KEY=refresh_token
+- **Language:** TypeScript strict mode
+- **Component naming:** PascalCase (Button, CustomerCard)
+- **File naming:** camelCase (authStore.ts, useAuth.ts)
+- **Folder naming:** kebab-case (auth-module, customer-list)
+- **Imports:** Use path alias `@/` (e.g., `@/components/Button`)
 
-# App Configuration
-NEXT_PUBLIC_APP_NAME=Spa Customer Care Platform
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+### ✅ UI Components
 
-# Feature Flags
-NEXT_PUBLIC_ENABLE_ANALYTICS=true
-NEXT_PUBLIC_ENABLE_NOTIFICATIONS=true
-```
+- **Source:** Only from shadcn/ui via `pnpm dlx shadcn@latest add <component>`
+- **Installation:** `cd front-end && pnpm dlx shadcn@latest add button`
+- **Example components:** Button, Input, Card, Dialog, Form, Table, etc.
+- **Custom styling:** Extend via Tailwind CSS utility classes
 
----
+### ✅ Code Organization
 
-## 8. Getting Started
+- Components: Feature-based organization
+- Utilities: Centralized in `/lib/utils/`
+- Types: Centralized in `/src/types/index.ts`
+- Constants: Centralized in `/src/config/constants.ts`
+- Stores: One store per domain in `/src/store/`
 
-### Prerequisites
-- Node.js 18+ hoặc 20+
-- pnpm 9.0+
+### ✅ Best Practices
 
-### Installation
-```bash
-cd front-end
-pnpm install
-pnpm dev
-```
-
-Ứng dụng sẽ chạy tại: **http://localhost:3000**
+- Use React Hook Form for form management
+- Validate with Zod schemas at runtime
+- Intercept API calls with Axios interceptors
+- Store auth state in Zustand
+- Keep components small & focused
+- Reuse components from shadcn/ui
+- Add error boundaries for graceful error handling
 
 ---
 
-## 9. Development Guidelines
+## 🎯 KPIs & Success Metrics
 
-### Code Style
-- TypeScript strict mode
-- ESLint & Prettier configuration
-- Component naming: PascalCase
-- Files: camelCase (except components)
-- Folder structure: kebab-case
+### Technical
 
-### Git Workflow
-```bash
-git checkout -b feature/feature-name
-git commit -m "feat: add feature description"
-git push origin feature/feature-name
-```
+- Page load time: < 2 seconds
+- API response time: < 500ms
+- Code coverage: > 80%
+- Lighthouse score: > 85
 
-### Testing (Phase 2)
-- Jest + React Testing Library
-- Unit tests for utilities
-- Component tests for UI
-- E2E tests with Cypress/Playwright
+### User Experience
+
+- Task completion rate: > 95%
+- User satisfaction: > 4.5/5
+- Zero critical bugs on production
 
 ---
 
-## 10. Deployment
+## 📞 Support & Contacts
 
-### Development
-```bash
-pnpm dev           # http://localhost:3000
-```
-
-### Production Build
-```bash
-pnpm build
-pnpm start
-```
-
-### Deployment Platforms
-- Vercel (recommended for Next.js)
-- Netlify
-- AWS Amplify
-- Self-hosted (VPS/Docker)
+- **Documentation:** `/front-end/docs/`
+- **API Integration:** See `docs/INDEX.md`
+- **Component Library:** shadcn/ui (https://ui.shadcn.com)
+- **Installation:** `pnpm dlx shadcn@latest add <component>`
 
 ---
 
-## 📚 Tham Khảo
+**🎉 Nền tảng SPA Customer Care Platform Frontend đã sẵn sàng cho phát triển!**
 
-- [Next.js 14 Documentation](https://nextjs.org/docs)
-- [React 19 Documentation](https://react.dev)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [shadcn/ui Components](https://ui.shadcn.com)
-- [Zustand Documentation](https://github.com/pmndrs/zustand)
-- [Axios Documentation](https://axios-http.com)
-
----
-
-**Last Updated:** October 19, 2025  
-**Version:** 1.0.0 (MVP)  
-**Status:** 🔄 In Development
+_Cập nhật lần cuối: 19/10/2025_
